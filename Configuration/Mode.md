@@ -1,10 +1,10 @@
-## Mode 模式
+# Mode 模式
 
 🎉 Webpack4+ 支持该配置
 
 **作用：**省去一些不必要的配置（如何要实现精细化的控制，还是需要自定义配置文件）
 
-### development
+## development
 
 **开发模式。**
 
@@ -19,7 +19,7 @@
 * 自动设置 `process.env.NODE_ENV = development`
 * 启用 `NamedChunksPlugin` 和 `NamedModulesPlugin` 为所有的模块（源文件）和块（构建输出的文件）定义一个名字
 
-### production
+## production
 
 **生产模式。**
 
@@ -42,6 +42,6 @@
   * `SideEffectsFlagPlugin`：告诉 Webapck 各个模块间的先后顺序，这样可以实现最优的构建输出
   * `TerserPlugin`：替代 uglifyjs-webpack-plugin 插件。它的作用依然是对构建输出的代码进行压缩
 
-### none
+## none
 
 **不做任何优化。**
