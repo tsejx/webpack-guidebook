@@ -1,6 +1,6 @@
-## 其他配置项
+# 其他配置项
 
-### Target
+## Target
 
 指定构建出不同运行环境的代码。
 
@@ -13,7 +13,7 @@
 | electron-main      | Electron 主线程                            |
 | exlectron-renderer | Electron 渲染线程                          |
 
-### DevTool
+## DevTool
 
 **用于控制是否生成以及如何生成 SourceMap**
 
@@ -37,7 +37,7 @@ module.export = {
 
 可以使用 `source-map` 或者 `cheap-source-map`
 
-### Watch 和 WatchOptions
+## Watch 和 WatchOptions
 
 支持监听文件更新，在文件发生变化时重新编译。在使用 Webpack 时，监听模式默认时关闭的。
 
@@ -64,7 +64,7 @@ module.export = {
 }
 ```
 
-### Externals
+## Externals
 
 构建中无须打包的模块，也就是这些模块是外部环境提供的。
 
@@ -94,7 +94,7 @@ module.export = {
 }
 ```
 
-### ResolveLoader
+## ResolveLoader
 
 如何寻找 Loader。
 
@@ -113,7 +113,7 @@ module.export = {
 }
 ```
 
-### Performance 性能
+## Performance 性能
 
 用于控制 webpack 如何通知「资源（asset）和入口起点超过指定文件限制」
 
@@ -122,12 +122,12 @@ module.export = {
 - `maxAssetSize` - 根据单个资源体积，控制 webpack 何时生成性能提示（默认 `250000` bytes）
 - `assetFilter` - 允许 webpack 控制用于计算性能提示的文件
 
-### Stats 统计
+## Stats 统计
 
-配置打包过程中输出的内容。 
+配置打包过程中输出的内容。
 
-- none 没有输出 
-- normal 标准输出 
-- verbose 全部输出 
-- errors-only 只输出错误 
+- none 没有输出
+- normal 标准输出
+- verbose 全部输出
+- errors-only 只输出错误
 

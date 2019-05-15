@@ -1,8 +1,8 @@
-## Module 模块
+# Module 模块
 
 module 配置处理模块的规则。
 
-### 配置 Loader
+## 配置 Loader
 
 rules 配置模块的读取和解析规则，通常用来配置 Loader。
 
@@ -77,7 +77,7 @@ test、include、exclude 这三个命中文件的配置项之传入了一个字�
 
 只要文件的路径满足其中任何一个条件，就会被命中。
 
-### noParse
+## noParse
 
 noParse 配置项可以让 Webpack 忽略对部分没采用模块化的文件的递归解析和处理，这样做的好处是能提高构建性能。原因是一些库如 jQuery、ChartJS 庞大又没有采用模块化标准，让 Webpack 去解析这些既耗时又没有意义。
 
@@ -85,7 +85,7 @@ noParse 是可选的配置项，类型需要是 RegExp、[RegExp]、function 中
 
 被忽略的文件里不应该包含 import、require、define 等模块化语句，不然会导致在构建出的代码中包含无法在浏览器环境下执行的模块化语句。
 
-### parser
+## parser
 
 与 noParse 配置项的区别在于，parser 可以精确到语法层面，而 noParse 只能控制哪些文件不被解析。
 
