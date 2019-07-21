@@ -1,4 +1,6 @@
-# Resolve 解析 
+# resolve 解析
+
+[中文文档](https://webpack.docschina.org/configuration/resolve/)
 
 用于配置 Webpack 如何寻找模块所对应的文件。默认采用模块化标准里约定的规则寻找，但是我们也可以自定义。
 
@@ -20,7 +22,7 @@
 Webpack 会根据 mainFields 的配置去决定优先采用哪份代码。默认如下：
 
 ```js
-mainFields: ['browser', 'main']
+mainFields: ['browser', 'main'];
 ```
 
 Webpack 会按照数组顺序在 `package.json` 文件里寻找，只会使用找到的第一个文件。
@@ -39,7 +41,7 @@ Webpack 会按照数组顺序在 `package.json` 文件里寻找，只会使用�
 
 配置从哪个目录下寻找第三方模块，默认值回去 `node_modules` 目录下寻找。
 
-有时我们的项目里会有一些模块被其他模块大量依赖和导入，由于其他模块的位置不定，针对不同的文件都要计算被导入的模块文件的相对路径 ，这个路径有时会很长，就像 `import '../../../components/button'`，这时可以利用 modules 配置项优化 。假如那些被大量导入的模块都在 `./ src/components` 目录下，则将 modules 配置成 `modules : ['./ src/cornponents', 'node modules']` 后，可以简单地通过 `import 'button'` 导入 。 
+有时我们的项目里会有一些模块被其他模块大量依赖和导入，由于其他模块的位置不定，针对不同的文件都要计算被导入的模块文件的相对路径 ，这个路径有时会很长，就像 `import '../../../components/button'`，这时可以利用 modules 配置项优化 。假如那些被大量导入的模块都在 `./ src/components` 目录下，则将 modules 配置成 `modules : ['./ src/cornponents', 'node modules']` 后，可以简单地通过 `import 'button'` 导入 。
 
 ## descriptionFiles
 
