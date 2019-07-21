@@ -1,6 +1,6 @@
 # 其他配置项
 
-## Target
+## target
 
 指定构建出不同运行环境的代码。
 
@@ -13,7 +13,7 @@
 | electron-main      | Electron 主线程                            |
 | exlectron-renderer | Electron 渲染线程                          |
 
-## DevTool
+## devTool
 
 **用于控制是否生成以及如何生成 SourceMap**
 
@@ -21,8 +21,8 @@
 
 ```js
 module.export = {
-    devtool: 'source-map'
-}
+  devtool: 'source-map',
+};
 ```
 
 **SourceMap**
@@ -37,7 +37,7 @@ module.export = {
 
 可以使用 `source-map` 或者 `cheap-source-map`
 
-## Watch 和 WatchOptions
+## watch/watchOptions
 
 支持监听文件更新，在文件发生变化时重新编译。在使用 Webpack 时，监听模式默认时关闭的。
 
@@ -45,26 +45,26 @@ module.export = {
 
 ```js
 module.export = {
-    // 只有在开启监听模式时，watchOptions 才有意义
-    // 默认为 false，也就是不开启
-    watch: true,
-    // 监听模式运行时的参数
-    // 在开启监听模式时，才有意义
-    watchOptions: {
-        // 不监听的文件或文件夹，支持正则匹配
-        // 默认为空
-        ignored: /node_modules/,
-        // 监听到变化会等 300ms 再去执行动作，防止文件更新太快导致重新编译频率太高
-        // 默认为300ms
-        aggregateTimeout: 300,
-        // 判断文件是否发生变化是通过不停地询问系统指定文件有没有变化实现的
-        // 默认每秒询问 1000 次
-        poll: 1000
-    }
-}
+  // 只有在开启监听模式时，watchOptions 才有意义
+  // 默认为 false，也就是不开启
+  watch: true,
+  // 监听模式运行时的参数
+  // 在开启监听模式时，才有意义
+  watchOptions: {
+    // 不监听的文件或文件夹，支持正则匹配
+    // 默认为空
+    ignored: /node_modules/,
+    // 监听到变化会等 300ms 再去执行动作，防止文件更新太快导致重新编译频率太高
+    // 默认为300ms
+    aggregateTimeout: 300,
+    // 判断文件是否发生变化是通过不停地询问系统指定文件有没有变化实现的
+    // 默认每秒询问 1000 次
+    poll: 1000,
+  },
+};
 ```
 
-## Externals
+## externals
 
 构建中无须打包的模块，也就是这些模块是外部环境提供的。
 
@@ -77,8 +77,8 @@ module.export = {
 如果想使用模块化的源代码里导入和使用 jQuery。
 
 ```js
-import $ from 'jquery'
-$('.my-element')
+import $ from 'jquery';
+$('.my-element');
 ```
 
 打包后发现输出 Chunk 中包含该库内容。
@@ -87,14 +87,14 @@ $('.my-element')
 
 ```js
 module.export = {
-    externals: {
-        // 将导入语句里的 jQuery 替换成运行环境里的全局变量 jQuery
-        jquery: 'jQuery'
-    }
-}
+  externals: {
+    // 将导入语句里的 jQuery 替换成运行环境里的全局变量 jQuery
+    jquery: 'jQuery',
+  },
+};
 ```
 
-## ResolveLoader
+## resolveLoader
 
 如何寻找 Loader。
 
@@ -102,27 +102,27 @@ module.export = {
 
 ```js
 module.export = {
-    resolveLoader: {
-        // 去哪个目录下寻找 loader
-        modules: ['node_modules'],
-        // 入口文件的后缀
-        extensions: ['.js', '.json'],
-        // 指明入口文件位置的字段
-        mainFields: ['loader', 'main']
-    }
-}
+  resolveLoader: {
+    // 去哪个目录下寻找 loader
+    modules: ['node_modules'],
+    // 入口文件的后缀
+    extensions: ['.js', '.json'],
+    // 指明入口文件位置的字段
+    mainFields: ['loader', 'main'],
+  },
+};
 ```
 
-## Performance 性能
+## performance 性能
 
 用于控制 webpack 如何通知「资源（asset）和入口起点超过指定文件限制」
 
 - `hints` - 打开/关闭提示 （默认 `warning`）
-- `maxEntrypointSize`  - 根据入口起点的最大体积，控制 webpack 何时生成性能提示（默认 `250000` bytes）
+- `maxEntrypointSize` - 根据入口起点的最大体积，控制 webpack 何时生成性能提示（默认 `250000` bytes）
 - `maxAssetSize` - 根据单个资源体积，控制 webpack 何时生成性能提示（默认 `250000` bytes）
 - `assetFilter` - 允许 webpack 控制用于计算性能提示的文件
 
-## Stats 统计
+## stats 统计
 
 配置打包过程中输出的内容。
 
@@ -130,4 +130,3 @@ module.export = {
 - normal 标准输出
 - verbose 全部输出
 - errors-only 只输出错误
-

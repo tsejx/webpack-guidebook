@@ -1,4 +1,6 @@
-# Output 输出
+# output 输出
+
+[中文文档](https://webpack.docschina.org/configuration/output/)
 
 作用：如何输出、哪里输出。
 

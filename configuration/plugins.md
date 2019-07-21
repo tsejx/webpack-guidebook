@@ -1,4 +1,6 @@
-# Plugins 插件
+# plugins 插件
+
+[中文文档](https://webpack.docschina.org/configuration/plugins/)
 
 用于扩展 Webpack 功能。
 
