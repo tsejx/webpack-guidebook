@@ -1,4 +1,4 @@
-# 理想化 Webpack 配置
+# 理想化配置
 
 配置多份 Webpack 配置，通过 `webpack-merge` 合并。
 
