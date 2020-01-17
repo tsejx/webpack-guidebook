@@ -6,7 +6,7 @@ const setPrefix = (base, route) => `${base}/${route}`;
 module.exports = {
   base: `/${name}/`,
   head: [['link', { rel: 'icon', href: 'favicon.ico' }]],
-  title: 'webpack-guidebook',
+  title: 'Webpack Guidebook',
   port: 8030,
   themeConfig: {
     repo: 'tsejx/webpack-guidebook',
@@ -57,7 +57,12 @@ module.exports = {
       {
         title: '实践',
         collapsable: false,
-        children: ['ESLint', 'Babel', 'Framework'].map(r => setPrefix('practice', r)),
+        children: [
+          'optimization',
+          'ESLint',
+          'Babel',
+          'Framework'
+        ].map(r => setPrefix('practice', r)),
       },
     ],
     sidebarDepth: 2,
