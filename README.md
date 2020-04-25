@@ -17,10 +17,12 @@
   - [plugins](configuration/plugins.md)
   - [module](configuration/module.md)
   - [otherOptions](configuration/other-ptions.md)
-- **內部原理**
+- **原理**
   - [运作机制](mechanism/workflow.md)
+  - [Loader 机制](mechanism/loader.md)
+  - [Plugin 机制](mechanism/plugin.md)
   - [提取公共代码](mechanism/commons-chunk-plugin)
-  - [模块热更新原理](mechanism/hot-module-replacement)
+  - [模块热更新](mechanism/hot-module-replacement)
   - [其他扩展](mechanism/extensions)
 - **实践**
   - [优化手段](practice/optimization)
