@@ -1,0 +1,22 @@
+{
+  "name": "webpack4-file-loader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^3.5.3",
+    "html-webpack-plugin": "^4.2.0",
+    "style-loader": "^1.2.1"
+  },
+  "dependencies": {
+    "file-loader": "^6.0.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  }
+}
