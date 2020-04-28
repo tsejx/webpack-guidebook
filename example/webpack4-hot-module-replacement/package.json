@@ -1,0 +1,19 @@
+{
+  "name": "webpack4-hot-module-replacement",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack-dev-server --open"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^3.5.3",
+    "html-webpack-plugin": "^4.2.0",
+    "style-loader": "^1.2.1",
+    "webpack-dev-server": "^3.10.3"
+  }
+}

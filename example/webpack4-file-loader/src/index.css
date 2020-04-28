@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'ResourceHanRoundedCN-Bold';
+    src: url('./ResourceHanRoundedCN-Bold.ttf')
+}
+
+.container {
+    font-size: 16px;
+    font-family: 'ResourceHanRoundedCN-Bold';
+}
