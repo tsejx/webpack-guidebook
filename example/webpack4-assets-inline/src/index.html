@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%= require('raw-loader!./meta.html') %>
+    <title>webpack4-assets-inline</title>
+    <script>
+      <%= require('raw-loader!babel-loader!../node_modules/lib-flexible/flexible.js') %>
+    </script>
+  </head>
+  <body></body>
+</html>
