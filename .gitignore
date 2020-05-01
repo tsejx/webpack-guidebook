@@ -5,3 +5,5 @@ TODO.md
 .temp/
 .umi-production/
 dist/
+yarn.lock
+yarn-error.log
