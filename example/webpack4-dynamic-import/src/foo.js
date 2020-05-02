@@ -1,0 +1,1 @@
+export default () => '动态加载成功';
