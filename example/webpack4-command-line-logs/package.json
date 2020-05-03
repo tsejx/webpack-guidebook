@@ -1,0 +1,16 @@
+{
+  "name": "webpack4-command-line-logs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:prod": "webpack  --config webpack.prod.js",
+    "build:dev": "webpack --config webpack.dev.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "friendly-errors-webpack-plugin": "^1.7.0"
+  }
+}
