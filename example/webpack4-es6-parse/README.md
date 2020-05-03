@@ -23,3 +23,11 @@ npm install @babel/core @babel/preset babel-loader -D
 ```bash
 npm run build
 ```
+
+## babel-loader 缓存
+
+二次构建时，babel-loader 转换将会缓存
+
+```js
+'babel-loader?cacheDirectory=true';
+```

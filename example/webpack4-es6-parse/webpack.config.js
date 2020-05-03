@@ -16,7 +16,7 @@ module.exports = {
     rules: [
       {
         test: /.js$/,
-        use: 'babel-loader',
+        use: 'babel-loader?cacheDirectory=true',
       },
     ],
   },

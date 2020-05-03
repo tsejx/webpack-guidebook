@@ -13,3 +13,7 @@ npm install optimize-css-assets-webpack-plugin cssnano html-webpack-plugin -D
   - optimize-css-assets-webpack-plugin
   - cssnano
 - HTML：html-webpack-plugin
+
+## 拆分多個 CSS
+
+目前 mini-css-extract-plugin 不支持拆分一一对应的多个 CSS 文件，需要使用 `extract-text-webpack-plugin` 支持该功能。
