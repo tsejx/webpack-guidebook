@@ -1,0 +1,8 @@
+.container {
+    display: flex;
+    color: red;
+    font-size: 16px;
+
+    /* no 注释语法将不进行 rem 转换 */
+    width: 100px; /* no */
+}
