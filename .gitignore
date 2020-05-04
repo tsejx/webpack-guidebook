@@ -7,3 +7,4 @@ TODO.md
 dist/
 yarn.lock
 yarn-error.log
+.vscode/
