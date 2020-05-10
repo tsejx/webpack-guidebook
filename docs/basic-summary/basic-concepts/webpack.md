@@ -1,3 +1,14 @@
+---
+nav:
+  title: 基本综述
+  order: 1
+group:
+  title: 基本概念
+  order: 1
+title: Webpack
+order: 7
+---
+
 # Webpack
 
 Webpack 是一个模块打包器。Webpack 单独与一些的 Task Runner 配合工作。然而，由于社区开发的 Webpack 插件，Bundler 和 Task Runner 之间的界限变得模糊。有时，这些插件用于执行通常在 Webpack 之外完成的任务，例如清理构建目录或部署构建代码。
