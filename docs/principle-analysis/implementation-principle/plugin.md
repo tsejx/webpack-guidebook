@@ -9,7 +9,7 @@ title: Plugin 机制
 order: 12
 ---
 
-# 插件机制
+# Plugin 机制
 
 通过插件我们可以扩展 webpack，在合适的时机通过 Webpack 提供的 API 改变输出结果，使 Webpack 可以执行更广泛的任务，拥有更强的构建能力。
 
