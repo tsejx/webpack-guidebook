@@ -1,9 +1,9 @@
 ---
-title: Webpack Guidebook - 📚 Webpack 知识图谱：模块化、原理分析、工作原理、实战应用
+title: Webpack Guidebook - 📚 Webpack 知识图谱：模块化、基础概念、工作原理、实战应用
 order: 10
 hero:
   title: Webpack Guidebook
-  desc: 📚 Webpack 知识图谱：模块化、原理分析、工作原理、实战应用
+  desc: 📚 Webpack 知识图谱：模块化、基础概念、工作原理、实战应用
   actions:
     - text: 立即开始
       link: /basic-summary/basic-concepts/build-tool
