@@ -1000,7 +1000,7 @@ module.exports = {
 
 - 开发环境下将 devtool 设置为 `cheap-module-eval-source-map`，因为生成这种 source map 的速度最快，能加速构建。在生产环境下将 devtool 设置为 `hidden-source-map`
 
-### babel
+### Babel
 
 📌 babel-loader 十分耗时间
 options.cacheDirectory 开启缓存
@@ -1039,7 +1039,7 @@ babel@7.0 因为现在大多数浏览器都已经支持 ES6 语法，所以如�
 }
 ```
 
-### 其他方法
+## 其他方法
 
 - 减少 resolve
 - devtool 去除 sourcemap
@@ -1075,8 +1075,22 @@ module、nomodule:
 
 它会通过分析请求头信息中的 UserAgent 实现自动加载浏览器所需的 polyfills。如果你使用较新的版本访问上面的连接会发现没有多少代码，而用 IE 则会产生很多。这样我们就可以使用 ES6+ 的代码和动态 polyfill 来兼容低版本浏览器，但是动态 polyfill 不能支持 `class` 和箭头函数等等这些特性，所以就需要按上面那样配置 babel 来把这些转换成 ES5 的。想知道更多动态 polyfill 可以点这里。
 
+**进阶方案对比**
+
+|                  | 适用于生产 | 首次编译快       | 二次编译快 | 整体尺寸不变大 | 支持拆包到文件级别 | 是否为通用方案   | Webpack 高级功能 |
+| ---------------- | ---------- | ---------------- | ---------- | -------------- | ------------------ | ---------------- | ---------------- |
+| dll              | X          | X                | Y          | X              | X                  | Y                | Y                |
+| external         | X          | Y                | Y          | X              | X                  | Y                | Y                |
+| 物理缓存         | X          | X                | Y          | Y              | Y                  | Y                | Y                |
+| ModuleFederation | Y          | Y                | Y          | Y              | Y                  | 看方案和社区发展 | Y                |
+| systemjs         | 加载会变慢 | 编译快，但加载慢 | Y          | Y              | Y                  | Y                | X                |
+| ESM in Browser   | 加载会变慢 | 编译快，但加载慢 |    Y        | Y              | Y                  | Y                | X                |
+| Pika + Snowpack  | 加载会变慢 | Y                | Y          | X              |       Y             | Y                | X                |
+| Gravity          | 加载会变慢 | 编译快，但加载慢 | Y          | Y              | Y                  | Y                | X                |
+
 ---
 
 **参考文章：**
 
-- [三十分钟掌握 Webpack 性能优化](https://juejin.im/post/5b652b036fb9a04fa01d616b#heading-13)
+- [📝 三十分钟掌握 Webpack 性能优化](https://juejin.im/post/5b652b036fb9a04fa01d616b#heading-13)
+- [📝 Webpack 优化总会让你不得不爱](https://juejin.im/post/5cceecb7e51d453ab908717c)
