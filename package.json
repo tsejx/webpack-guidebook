@@ -22,7 +22,7 @@
   "license": "MIT",
   "homepage": "https://tsejx.github.io/webpack-guidebook/",
   "devDependencies": {
-    "dumi": "^1.0.20",
+    "dumi": "^1.0.34",
     "lint-md": "^0.1.1"
   }
 }
