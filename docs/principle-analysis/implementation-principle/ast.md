@@ -328,6 +328,7 @@ Parser.prototype.parse = function parse(source, initialState) {
 - [🛠 Espree：最初从 Esprima fork 出来，来自 ESlint，用于 ESlint](https://github.com/eslint/espree)
 - [🛠 babel-parser：原 babylon，最初从 acorn fork 出来](https://github.com/babel/babel/tree/master/packages/babel-parser/src/parser)
 - [🛠 UglifyJS2：自带 parser](https://github.com/mishoo/UglifyJS)
+- [🛠 Rappid：Powerful visual tools at your fingertips](https://www.jointjs.com/)
 - [📝 AST 与前端工程化实战](https://juejin.im/post/5d50d1d9f265da03aa25607b)
 - [📝 AST in Modern JavaScript](https://zhuanlan.zhihu.com/p/32189701)
 - [📝 使用 Acorn 来解析 JavaScript](https://juejin.im/post/582425402e958a129926fcb4)

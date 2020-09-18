@@ -8,7 +8,7 @@ order: 13
 
 # Tree Shaking
 
-TreeShaking 是 DCE（Dead Code Elimination）的实现，该功能让代码文件中没有使用过的代码片段能在构建过程中删除，从而达到构建产物的优化。
+**TreeShaking** 是 DCE（Dead Code Elimination）的实现，该功能让代码文件中没有使用过的代码片段能在构建过程中删除，从而达到构建产物的优化。
 
 引用 TreeShaking 提出者也是 Rollup 作者的比喻：
 
@@ -16,7 +16,7 @@ TreeShaking 是 DCE（Dead Code Elimination）的实现，该功能让代码文�
 
 基于 ES6 的静态引用，TreeShaking 通过扫描所有 ES6 的 `export`，找出被 `import` 的内容并添加到最终代码中。
 
-Webpack 的实现是把所有 `import` 标记为 **有使用** / **无使用** 两种，在后续压缩时进行区别处理。因为就如比喻所说，在放入烤箱（压缩混淆）前先剔除蛋壳（无使用的 import），只放入有用的蛋白蛋黄（有使用的 import）。
+Webpack 的实现是把所有 `import` 标记为 **有使用** / **无使用** 两种，在后续压缩时进行区别处理。因为就如比喻所说，在放入烤箱（压缩混淆）前先剔除蛋壳（无使用的 `import`），只放入有用的蛋白蛋黄（有使用的 `import`）。
 
 ## 使用方法
 

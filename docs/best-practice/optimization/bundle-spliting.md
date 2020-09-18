@@ -144,7 +144,10 @@ new CommonsChunkPlugin({
 
 ## 激进合并 HTTP/2
 
-Webpack 通过两个插件提供对生成的块的更多控制：AggressiveSplittingPlugin 和 AggressiveMergingPlugin。前者允许您发出更多更小的包。由于 HTTP/2 新标准的工作方式，这种处理是非常方便的。
+Webpack 通过两个插件提供对生成的块的更多控制：AggressiveSplittingPlugin 和 AggressiveMergingPlugin。
+
+- 前者可以产生更多的小块 bundles，但同时会增加客户端的请求数量（HTTP2 采取多路复用，可以很好适应）
+- 后者相反，产生更少的 bundles
 
 以下是一种更激进的分割打包方式：
 
@@ -189,7 +192,6 @@ Webpack 将代码分离用于 **按需加载**，可以处理并行请求。
   ];
 }
 ```
-
 
 ---
 

@@ -1,6 +1,5 @@
-export default {
+const config = {
   mode: 'site',
-  hash: true,
   title: 'Webpack Guidebook',
   description: 'Webpack 完全知识体系',
   base: '/webpack-guidebook/',
@@ -8,11 +7,18 @@ export default {
   favicon: './favicon.ico',
   logo: 'http://img.mrsingsing.com/webpack-guidebook-favicon.svg',
   exportStatic: {},
+  dynamicImport: {},
   navs: [
     null,
     {
       title: 'Github',
       path: 'https://github.com/tsejx/webpack-guidebook',
     },
-  ]
+  ],
 };
+
+if (process.env.NODE_ENV !== 'development') {
+  config.ssr = {};
+}
+
+export default config;
