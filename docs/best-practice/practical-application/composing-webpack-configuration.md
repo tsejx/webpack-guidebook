@@ -17,7 +17,7 @@ order: 1
 
 - 对于每一个环境都使用多个环境来组合配置，通过模块导入共享相同的配置，并通过 `--config` 参数将 Webpack 指向特定的环境
 - 将配置打包成库，然后使用该库。例如：[hjs-webpack](https://www.npmjs.com/package/hjs-webpack)、[Neutrino](https://neutrino.js.org/)、[webpack-blocks](https://www.npmjs.com/package/webpack-blocks)
-- 将配置转换成工具。例如：[create-raect-app](https://www.npmjs.com/package/create-react-app)、[kyt](https://www.npmjs.com/package/kyt)、[nwb](https://www.npmjs.com/package/nwb)
+- 将配置转换成工具。例如：[create-react-app](https://www.npmjs.com/package/create-react-app)、[kyt](https://www.npmjs.com/package/kyt)、[nwb](https://www.npmjs.com/package/nwb)
 - 在单个文件中的维护所有的配置，并在其内部进行分支，使用传入 `--env` 参数来确定分支走向
 
 可以组合这些方法以创建更高级别的配置，然后由更小的部分组成。然后可以将这些部分添加到库中，然后通过 npm 使用它，从而可以在多个项目中使用相同的配置。
