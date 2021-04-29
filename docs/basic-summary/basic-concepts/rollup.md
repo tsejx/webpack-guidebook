@@ -58,6 +58,6 @@ Rollup 官方提供了用于构建的插件：[rollup-plugin](https://github.com
 
 **参考资料：**
 
-- [📖 roolup.js 中文文档](https://www.rollupjs.com/guide/en)
+- [📖 rollup.js 中文文档](https://www.rollupjs.com/)
 - [📝 关于 Rollup 那些事](https://juejin.im/post/5adc7f915188256715473cea)
 - [📝 10 分钟快速入门 Rollup](https://juejin.im/post/5bed8b26e51d4560336ca5b3)
