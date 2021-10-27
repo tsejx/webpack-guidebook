@@ -141,8 +141,6 @@ if (process.env.NODE_ENV === 'production') {
 
 Webpack 可以根据 DefinePlugin 的声明来选择正确的代码。此处您必须使用 CommonJS 模块规范，因为 ES2015 `import` 不允许动态导入行为。
 
----
-
-**参考资料：**
+## 参考资料
 
 - [实用 Webpack 插件之 DefinePlugin](https://segmentfault.com/a/1190000017217915)

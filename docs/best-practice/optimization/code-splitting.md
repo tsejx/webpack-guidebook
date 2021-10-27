@@ -74,7 +74,7 @@ class AsyncComponent extends React.Component {
     this.state = { Component: null };
   }
   componentDidMount() {
-    this.props.loader().then(Component => this.setState({ Component }));
+    this.props.loader().then((Component) => this.setState({ Component }));
   }
   render() {
     const { Component } = this.state;
@@ -84,5 +84,3 @@ class AsyncComponent extends React.Component {
   }
 }
 ```
-
-> [react-async-component]()

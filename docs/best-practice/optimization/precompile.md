@@ -6,44 +6,29 @@ group:
   title: 构建优化
   order: 2
 title: 预编译资源模块
-order: 2
+order: 3
 ---
 
 # 预编译资源模块
 
 ## 脚本外链分包
 
-分包：设置 `externals`
+通过配置字段 `externals` 配置通过外链接入的第三方模块包。将 `react`、`react-dom` 等基础包通过 CDN 引入，不打入 `bundle` 中。
 
-思路： 将 `react`、`react-dom` 等基础包通过 CDN 引入，不打入 bundle 中
-
-方法：使用 `html-webpack-externals-plugin`
+配置示例：
 
 ```js
-const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
-
 module.exports = {
-  plugins: [
-    new HtmlWebpackExternalsPlugin({
-      externals: [
-        {
-          module: 'react',
-          entry: 'https://unpkg.com/react@16.13.1/umd/react.production.min.js',
-          global: 'React',
-        },
-        {
-          module: 'react-dom',
-          entry: 'https://unpkg.com/react-dom@16.13.1/umd/react-dom.production.min.js',
-          global: 'ReactDOM',
-        },
-      ],
-      files: ['index.html'],
-    }),
-  ],
+  //...
+  externals: {
+    jquery: 'jQuery',
+  },
 };
 ```
 
 ## 动态链接库
+
+> Webpack 4+ 以上可用 [HardSourceWebpackPlugin](#hardsourcewebpackplugin) 插件代替
 
 > 所谓动态链接，就是把一些经常会共享的代码制作成 DLL 档，当可执行文件调用到 DLL 档内的函数时，Windows 操作系统才会把 DLL 档加载存储器内，DLL 档本身的结构就是可执行档，当程序有需求时函数才进行链接。透过动态链接方式，存储器浪费的情形将可大幅降低。
 
@@ -159,37 +144,49 @@ module.exports = {
 
 如此，在接下来的本地开发（`dev` 过程）和线上构建过程，将不再重复静态公共资源的构建，极大地缩减我们的构建时间。
 
-### 最新动态
+## HardSourceWebpackPlugin
 
-如果项目使用了 Webpack4，确实对 dll 的依赖没那么大，使用 dll 相对来说提升也不是特别明显。而且有 `hard-source-webpack-plugin` 可以极大提升二次构建速度。
+[HardSourceWebpackPlugin](https://github.com/mzgoddard/hard-source-webpack-plugin) 为模块提供中间缓存步骤，缓存默认的存放路径是: `node_modules/.cache/hard-source`。
 
-不过从实际前端工程中来说， dll 还是很有必要掌握的。对于一个团队而言，基本是采用相同的技术栈，要么 React、要么 Vue 等等。这个时候，通常的做法都是把公共框架打成一个 common bundle 文件供所有项目使用。比如我们团队会将 react、react-dom、redux、react-redux 等等打包成一个公共库。dll 可以很好的满足这种场景：将多个 npm 包打成一个公共包。因此团队里面的分包方案使用 dll 还是很有价值，常见的会从整个工程的角度分为基础包（react、redux 等）、业务公共包（所有业务都要用到的监控上报脚本、页面初始化脚本）、某个业务的 js。
-
-dllplugin 和 splitChunks 可以一起用吗?有没有什么区别和联系?
-
-可以一起使用。 DllPlugin 通常用于基础包（框架包、业务包）的分离。
-
-SplitChunks 虽然也可以做 DllPlugin 的事情，但是更加推荐使用 SplitChunks 去提取页面间的公共 js 文件。因为使用 SplitChunks 每次去提取基础包还是需要耗费构建时间的，如果是 DllPlugin 只需要预编译一次，后面的基础包时间都可以省略掉。
-
-## hard-source-webpack-plugin
-
-在 Webpack4 中，`hard-source-webpack-plugin` 是 DLL 的更好替代者。
-
-`hard-source-webpack-plugin` 是 Webpack 的插件，为模块提供中间缓存步骤。为了查看结果，您需要使用此插件运行 Webpack 两次：第一次构建将花费正常的时间。第二次构建将显着加快（大概提升 90%的构建速度）。
+为了查看结果，您需要使用此插件运行 Webpack 两次：第一次构建将花费正常的时间。第二次构建将显着加快（大概提升 90%的构建速度）。
 
 ```js
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 module.exports = {
   plugins: [
-    // 直接加入这行代码就行
-    new HardSourceWebpackPlugin();
-  ]
-}
+    new HardSourceWebpackPlugin({
+      // Either an absolute path or relative to webpack's options.context.
+      cacheDirectory: 'node_modules/.cache/hard-source/[confighash]',
+      // Either a string of object hash function given a webpack config.
+      configHash: function (webpackConfig) {
+        // node-object-hash on npm can be used to build this.
+        return require('node-object-hash')({ sort: false }).hash(webpackConfig);
+      },
+      // Either false, a string, an object, or a project hashing function.
+      environmentHash: {
+        root: process.cwd(),
+        directories: [],
+        files: ['package-lock.json', 'yarn.lock'],
+      },
+      info: {
+        // 'none' or 'test'.
+        mode: 'none',
+        // 'debug', 'log', 'info', 'warn', or 'error'.
+        level: 'debug',
+      },
+      // 自动删除体积大的和存在已久的缓存
+      cachePrune: {
+        // 缓存在该时间内不会被删除（单位：毫秒）
+        maxAge: 2 * 24 * 60 * 60 * 1000,
+        // 在删除任何缓存之前，所有缓存一起必须大于'sizeThreshold'。它们加在一起必须至少有这个（默认值：50MB）大的字节
+        sizeThreshold: 50 * 1024 * 1024,
+      },
+    }),
+  ],
+};
 ```
 
----
-
-**参考资料：**
+## 参考资料
 
 - [📝 Webpack 编译速度提升之 DllPlugin](https://juejin.im/post/5b3e22e3f265da0f4b7a72df)

@@ -13,10 +13,10 @@ order: 15
 
 动态 Polyfill 是根据不同浏览器的特性，载入需要的特性补丁。Polyfill.io 通过尝试使用 polyfill 重新创建缺少的功能，可以轻松地支持不同的浏览器，并且可以大幅度地减少构建体积。
 
-动态 Polyfill 方案对比：
+方案对比：
 
 | 方案                           | 优点                                       | 缺点                                                                                                                       | 是否采用 |
-| ------------------------------ | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------- | -------- |
+| :----------------------------- | :----------------------------------------- | :------------------------------------------------------------------------------------------------------------------------- | -------- |
 | babel-polyfill                 | React16 官方推荐                           | 1. 包体积 200K+，难以单独抽离 Map、Set<br/>2. 项目里 React 是单独引用的 CDN，如果要用它，需要单独构建一份放在 React 前加载 | ❌       |
 | babel-plugin-transform-runtime | 能只 polyfill 用到的类或方法，相对体积较小 | 不能 polyfill 原型上的方法，不适用于业务项目的复杂开发环境                                                                 | ❌       |
 | 自己写 Map、Set 的 Polyfill    | 定制化高，体积小                           | 1. 重复造轮子，容易在日后年久失修成为坑<br/>2. 即使体积小，依然所有用户都要加载                                            | ❌       |
@@ -24,17 +24,17 @@ order: 15
 
 ## 使用方法
 
-直接引入代码即可使用默认配置的 Polyfill：
+代码示例：
 
 ```html
 <script crossorigin="anonymous" src="https://polyfill.io/v3/polyfill.min.js"></script>
 ```
 
-Polyfill.io 通过分析请求头信息中的 UserAgent 实现自动加载浏览器所需的 polyfill。
+[Polyfill.io](https://polyfill.io/v3/) 通过分析请求头信息中的 UserAgent 实现自动加载浏览器所需的 polyfill。
 
 ## 高级用法
 
-Polyfill.io 有一份默认捆绑列表，包括了最常见的 HTML5 中的 `document.querySelector`、`Element.classList`、ES5、ES6、ES7 中的 `Promise`、`fetch`、`Array.from` 等等。
+[Polyfill.io](https://polyfill.io/v3/) 有一份默认捆绑列表，包括了最常见的 HTML5 中的 `document.querySelector`、`Element.classList`、ES5、ES6、ES7 中的 `Promise`、`fetch`、`Array.from` 等等。
 
 你可以通过传递 `features` 参数来自定义功能列表：
 

@@ -21,15 +21,17 @@ order: 1
 stats: 'errors-only';
 ```
 
+<br />
+
 | Preset          | Alternative | Description                    |
-| --------------- | ----------- | ------------------------------ |
+| :-------------- | :---------- | :----------------------------- |
 | `"errors-only"` | `none`      | 只有发生错误时输出             |
 | `"minimal"`     | `none`      | 只在发生错误或有新的编译时输出 |
 | `"none"`        | `false`     | 没有输出                       |
 | `"normal"`      | `true`      | 标准输出                       |
 | `"verbose"`     | `none`      | 全部数据                       |
 
-在 package.json 中使用 stats
+在 `package.json` 中使用 `stats`：
 
 ```json
 {
@@ -60,8 +62,8 @@ const smp = new SppedMeasurePlugin();
 
 const webpackConfig = smp.wrap({
   plugins: [
-    new MyPlugin(),
-    new MyOtherPlugin().,
+    new HtmlWebpackPlugin(),
+    new PreloadWebpackPlugin().,
   ]
 })
 ```
@@ -112,19 +114,6 @@ import img from '../../assets/performance/webpack-bundle-analyzer-compilation.pn
 export default () => <img alt="webpack-bundle-analyzer-compilation" src={img} width={720} />;
 ```
 
-对 Stats 实例调用 `toJSON()` 方法，获取格式化信息。
+对 `Stats` 实例调用 `toJSON()` 方法，获取格式化信息。
 
-这个插件就是从 `stats.json` 中获取 `chunks` 然后最终使用 Canvas 画图。具体代码位于 analyzer.js 中的 [getViewerData](https://github.com/webpack-contrib/webpack-bundle-analyzer/blob/master/src/analyzer.js#L20) 方法。
-
-## 速度优化策略
-
-使用高版本的 webpack 和 Node.js
-
-使用 webpack4
-
-- V8 带来的优化（for of 替代 forEach、Map 和 Set 替代 Object、includes 替代 indexOf）
-- 默认使用更快的 md4 hash 算法
-- webpack AST 可以直接从 loader 传递给 AST，减少解析时间
-- 使用字符串方法替代正则表达式
-
-<!-- dart-sass 要比 node-sass好使 -->
+这个插件就是从 `stats.json` 中获取 `chunks` 然后最终使用 Canvas 画图。具体代码位于 `analyzer.js` 中的 [getViewerData](https://github.com/webpack-contrib/webpack-bundle-analyzer/blob/master/src/analyzer.js#L20) 方法。

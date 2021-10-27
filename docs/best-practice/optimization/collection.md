@@ -13,17 +13,17 @@ order: 100
 
 **打包速度优化**
 
-文件多？业务复杂 语法分析多
-依赖多？提取公共代码
-页面多？操作耗时的编译方式
+- 文件多？业务复杂 语法分析多
+- 依赖多？提取公共代码
+- 页面多？操作耗时的编译方式
 
 ## 优化构建速度
 
-Webpack 在启动后会根据 entry 配置的入口出发，递归地解析所依赖的文件。这个过程分为搜索文件和把匹配的文件进行分析、转化的两个过程，因此可以从这两个角度来进行优化配置
+Webpack 在启动后会根据 `entry` 配置的入口出发，递归地解析所依赖的文件。这个过程分为 <strong style="color:red">搜索文件</strong> 和 <strong style="color:red">把匹配的文件进行分析、转化</strong> 的两个过程，因此可以从这两个角度来进行优化配置。
 
 ### 缩小文件的搜索范围
 
-Webpack 在启动后从配置 entry 出发，解析文中导入语句，再递归解析，在遇到导入语句时：
+Webpack 在启动后从配置 `entry` 出发，解析文中导入语句，再递归解析，在遇到导入语句时：
 
 - 根据导入语句去寻找对应的要导入的文件
 - 根据找到的要导入的文件的后缀，使用配置中的 Loader 去处理文件。例如使用 ES6 开发的 JavaScript 文件需要使用 babel-loader 处理 。
@@ -516,23 +516,26 @@ module.exports = {
 
 ### 区分环境：减少生产环境代码体积
 
-代码运行环境分为开发环境和生产环境，代码需要根据不同环境做不同的操作，许多第三方库中也有大量的根据开发环境判断的 `if else` 代码，构建也需要根据不同环境输出不同的代码，所以需要一套机制可以在源码中区分环境，区分环境之后可以使输出的生产环境的代码体积减少。Webpack 中使用 DefinePlugin 插件来定义配置文件适用的环境。
+代码运行环境分为开发环境和生产环境，代码需要根据不同环境做不同的操作，许多第三方库中也有大量的根据开发环境判断的 `if-else` 代码，构建也需要根据不同环境输出不同的代码，所以需要一套机制可以在源码中区分环境，区分环境之后可以使输出的生产环境的代码体积减少。Webpack 中使用 [webpack.DefinePlugin](https://webpack.js.org/plugins/define-plugin/) 内置插件来定义配置文件适用的环境。
 
 ```js
 module.exports = {
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production'),
-      },
+      PRODUCTION: JSON.stringify(true),
+      VERSION: JSON.stringify('5fa3b9'),
+      BROWSER_SUPPORTS_HTML5: true,
+      TWO: '1+1',
+      'typeof window': JSON.stringify('object'),
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
   ],
 };
 ```
 
-注意，`JSON.stringify('production')` 的原因时，环境变量值需要一个双引号包裹的字符串，而 stringify 后的值时 `'production'`。
+⚠️ 注意，需要 JSON 序列化 `JSON.stringify('production')` 的原因是，环境变量值需要一个双引号包裹的字符串，而 stringify 后的值时 `'production'`。
 
-然后就可以在源码中使用定义的环境
+然后就可以在源码中使用定义的环境：
 
 ```js
 if (process.env.NODE_ENV === 'production') {
@@ -544,7 +547,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 ```
 
-当代码中使用 process 时，Webpack 会自动打包进 process 模块的代码以支持非 NodeJS 的运行环境，这个模块的作用时模拟 NodeJS 中的 process，以支持 `process.env.NODE_ENV === 'procution'` 语句。
+当代码中使用 `process` 时，Webpack 会自动打包进 `process` 模块的代码以支持非 Node.js 的运行环境，这个模块的作用时模拟 Node.js 中的 `process`，以支持 `process.env.NODE_ENV === 'procution'` 语句。
 
 ### 压缩代码：JS、ES、CSS
 
@@ -555,7 +558,7 @@ if (process.env.NODE_ENV === 'production') {
 ```js
 module.exports = {
   plugins: [
-    new webpack.UlifyJSPlugin({
+    new webpack.UglifyJSPlugin({
       compress: {
         warnings: false, // 删除无用代码时不输出警告
         drop_console: true, // 删除所有console语句，可兼容IE
@@ -853,13 +856,13 @@ module.exports = {
 
 ```js
 //main.js
-document.getElementById('btn').addEventListener('click', function() {
-  import(/* webpackChunkName:"show" */ './show').then(show => {
+document.getElementById('btn').addEventListener('click', function () {
+  import(/* webpackChunkName:"show" */ './show').then((show) => {
     show('Webpack');
   });
 });
 //show.js
-module.exports = function(content) {
+module.exports = function (content) {
   window.alert('Hello ' + content);
 };
 ```
@@ -1084,13 +1087,12 @@ module、nomodule:
 | 物理缓存         | X          | X                | Y          | Y              | Y                  | Y                | Y                |
 | ModuleFederation | Y          | Y                | Y          | Y              | Y                  | 看方案和社区发展 | Y                |
 | systemjs         | 加载会变慢 | 编译快，但加载慢 | Y          | Y              | Y                  | Y                | X                |
-| ESM in Browser   | 加载会变慢 | 编译快，但加载慢 |    Y        | Y              | Y                  | Y                | X                |
-| Pika + Snowpack  | 加载会变慢 | Y                | Y          | X              |       Y             | Y                | X                |
+| ESM in Browser   | 加载会变慢 | 编译快，但加载慢 | Y          | Y              | Y                  | Y                | X                |
+| Pika + Snowpack  | 加载会变慢 | Y                | Y          | X              | Y                  | Y                | X                |
 | Gravity          | 加载会变慢 | 编译快，但加载慢 | Y          | Y              | Y                  | Y                | X                |
 
----
-
-**参考文章：**
+## 参考文章
 
 - [📝 三十分钟掌握 Webpack 性能优化](https://juejin.im/post/5b652b036fb9a04fa01d616b#heading-13)
 - [📝 Webpack 优化总会让你不得不爱](https://juejin.im/post/5cceecb7e51d453ab908717c)
+- [Webpack 系列二：优化 90%打包速度](https://github.com/sisterAn/blog/issues/63)

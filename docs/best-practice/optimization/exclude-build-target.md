@@ -6,16 +6,22 @@ group:
   title: 构建优化
   order: 2
 title: 缩小构建目标
-order: 4
+order: 2
 ---
 
 # 缩小构建目标
 
+Webpack 启动后会从配置的 `entry` 出发，解析出文件中的导入语句，再递归的解析。 在遇到导入语句时 Webpack 会做两件事情：
+
+1. 根据导入语句去寻找对应的要导入的文件。例如 `require('react')` 导入语句对应的文件是 `./node_modules/react/react.js`；`require('./util')` 对应的文件是 `./util.js`。
+2. 根据找到的要导入文件的后缀，使用配置中的 `loader` 去处理文件。例如使用 ES6 开发的 JavaScript 文件需要使用 `babel-loader` 去处理。
+
+以上两件事情虽然对于处理一个文件非常快，但是当项目大了以后文件量会变的非常多，这时候构建速度慢的问题就会暴露出来。 虽然以上两件事情无法避免，但需要尽量减少以上两件事情的发生，以提高速度。
+
 ## 减少文件搜索范围
 
-- 优化 `resolve.modules` 配置（减少模块搜索层级）
-- 优化 `resolve.mainFields` 配置
-- 优化 `resolve.extensions` 配置
+- 优化 `resolve.modules` 配置：通过指定解析模块所在的目录，以减少模块搜索层级
+- 优化 `resolve.extensions` 配置：自动解析确认的后缀扩展
 - 合理使用 `alias`：当我们代码出现 `import` 时，Webpack 会采用向上递归搜索的方式去 `node_modules` 目录下找。为了减少搜索范围我们可以直接告诉 Webpack 去哪个路径下查找。
 - `noParse`：当我们的代码使用到 `import jQuery from 'jquery'` 是，Webpack 会解析 React 这个库是否有依赖其他包。但是我们对类似 jQuery 这类依赖库，一般会认为不会引用其他的包。该属性告诉 Webpack 不用解析某些包。
 
