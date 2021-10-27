@@ -6,7 +6,7 @@ group:
   title: 核心概念
   order: 2
 title: devServer 开发服务器
-order: 8
+order: 12
 ---
 
 # devServer 开发服务器

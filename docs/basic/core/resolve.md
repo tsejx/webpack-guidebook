@@ -11,7 +11,7 @@ order: 5
 
 # resolve 解析
 
-[中文文档](https://webpack.docschina.org/configuration/resolve/)
+[Resolve](https://webpack.js.org/configuration/resolve/)
 
 用于配置 Webpack 如何寻找模块所对应的文件。默认采用模块化标准里约定的规则寻找，但是我们也可以自定义。
 

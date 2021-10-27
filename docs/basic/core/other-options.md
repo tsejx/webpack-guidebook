@@ -5,13 +5,13 @@ nav:
 group:
   title: 核心概念
   order: 2
-title: otherOptions 其他配置
-order: 8
+title: 其他配置
+order: 15
 ---
 
 # 其他配置项
 
-## target
+## target 构建目标
 
 指定构建出不同运行环境的代码。
 
@@ -48,7 +48,7 @@ module.export = {
 
 可以使用 `source-map` 或者 `cheap-source-map`
 
-## watch/watchOptions
+## watch 和 watchOptions
 
 支持监听文件更新，在文件发生变化时重新编译。在使用 Webpack 时，监听模式默认时关闭的。
 
@@ -75,7 +75,7 @@ module.export = {
 };
 ```
 
-## externals
+## externals 外部扩展
 
 构建中无须打包的模块，也就是这些模块是外部环境提供的。
 

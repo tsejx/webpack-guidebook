@@ -26,8 +26,8 @@ Rollup 默认采用 ES 模块标准，我们可以通过 [rollup-plugin-commonjs
 
 Rollup 官方提供了用于构建的插件：[rollup-plugin](https://github.com/rollup/plugins)
 
-|                                                                             |                                                                                           |
-| --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| 插件                                                                        | 说明                                                                                      |
+| :-------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------- |
 | [alias](packages/alias)                                                     | Define and resolve aliases for bundle dependencies                                        |
 | [auto-install](packages/auto-install)                                       | Automatically install dependencies that are imported by a bundle                          |
 | [babel](https://github.com/rollup/plugins/tree/master/packages/babel)       | Compile your files with Babel                                                             |
@@ -52,11 +52,8 @@ Rollup 官方提供了用于构建的插件：[rollup-plugin](https://github.com
 | [virtual](packages/virtual)                                                 | Load virtual modules from memory                                                          |
 | [wasm](packages/wasm)                                                       | Import WebAssembly code with Rollup                                                       |
 | [yaml](packages/yaml)                                                       | Convert YAML files to ES6 modules                                                         |
-|                                                                             |                                                                                           |
 
----
-
-**参考资料：**
+## 参考资料
 
 - [📖 roolup.js 中文文档](https://www.rollupjs.com/guide/en)
 - [📝 关于 Rollup 那些事](https://juejin.im/post/5adc7f915188256715473cea)

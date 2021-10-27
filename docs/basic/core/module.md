@@ -11,7 +11,7 @@ order: 6
 
 # module 模块
 
-[中文文档](https://webpack.docschina.org/configuration/module/)
+[Module](https://webpack.js.org/configuration/module/)
 
 module 配置处理模块的规则。
 

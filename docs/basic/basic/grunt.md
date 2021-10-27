@@ -33,7 +33,7 @@ Gruntfile 由以下几部分构成：
 在下面列出的这个 Gruntfile 中，`package.json` 文件中的项目元数据（metadata）被导入到 Grunt 配置中， `grunt-contrib-uglify` 插件中的 `uglify` 任务（task）被配置为压缩（minify）源码文件并依据上述元数据动态生成一个文件头注释。当在命令行中执行 `grunt` 命令时，`uglify` 任务将被默认执行。
 
 ```js
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   // 项目初始化配置
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -61,7 +61,7 @@ module.exports = function(grunt) {
 每一份 Gruntfile （和 Grunt 插件）都遵循同样的格式，你所书写的 Grunt 代码必须放在此函数内：
 
 ```js
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   // Do grunt-related things in here
 };
 ```
@@ -115,9 +115,9 @@ grunt.registerTask('default', ['uglify']);
 如果 Grunt 插件中的任务（task）不能满足你的项目需求，你还可以在 Gruntfile 中自定义任务（task）。例如，在下面的 Gruntfile 中自定义了一个 `default` 任务，并且他甚至不依赖任务配置：
 
 ```js
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   // A very basic default task.
-  grunt.registerTask('default', 'Log some stuff.', function() {
+  grunt.registerTask('default', 'Log some stuff.', function () {
     grunt.log.write('Logging some stuff...').ok();
   });
 };
@@ -125,9 +125,7 @@ module.exports = function(grunt) {
 
 特定于项目的任务不必在 Gruntfile 中定义。他们可以定义在外部 `.js` 文件中，并通过 `grunt.loadTasks` 方法加载。
 
----
-
-**参考资料：**
+## 参考资料
 
 - [📝 使用 Grunt 构建任务管理脚本](https://www.w3cplus.com/tools/writing-awesome-build-script-grunt.html)
 - [📝 有关 Grunt - 自动化构建工具的奇技淫巧](https://segmentfault.com/a/1190000005029360)

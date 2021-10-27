@@ -15,9 +15,7 @@ Gulp 与 Grunt 一样，也是一个 **自动任务运行器**。它充分借鉴
 
 Gulp 采取了不同的策略。您不必依赖每个插件的配置，而是处理实际代码。通过 `sources` 匹配文件，`filters` 来操作这些文件，以及 `sinks` 传入管道构建结果。
 
-这是一个缩写的示例 `_Gulpfile`，它改编自 Gulp 项目的 README 文件，让您更好地了解该 Gulp：
-
-🌰 **示例：**
+代码示例：
 
 ```js
 const gulp = require('gulp');
@@ -35,18 +33,21 @@ const paths = {
 // A gulpfile is another node program
 // and you can use all packages available on npm.
 gulp.task('clean', () => del(['build']));
-gulp.task('scripts', ['clean'], () =>
-  // Minify and copy all JavaScript (except vendor scripts)
-  // with source maps all the way down.
-  gulp
-    .src(paths.scripts)
-    // Pipeline within pipeline
-    .pipe(sourcemaps.init())
-    .pipe(coffee())
-    .pipe(uglify())
-    .pipe(concat('all.min.js'))
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('build/js'))
+gulp.task(
+  'scripts',
+  ['clean'],
+  () =>
+    // Minify and copy all JavaScript (except vendor scripts)
+    // with source maps all the way down.
+    gulp
+      .src(paths.scripts) // 读取源文件
+      // Pipeline within pipeline
+      .pipe(sourcemaps.init())
+      .pipe(coffee())
+      .pipe(uglify())
+      .pipe(concat('all.min.js'))
+      .pipe(sourcemaps.write())
+      .pipe(gulp.dest('build/js')) // 写到 dist 文件夹中
 );
 gulp.task('watch', () => gulp.watch(paths.scripts, ['scripts']));
 
@@ -60,9 +61,9 @@ gulp.task('default', ['watch', 'scripts']);
 
 其实 Webpack 和另外两个并没有太多的可比性。
 
-- Gulp/Grunt 是一种能够优化前端的开发流程的工具，而 WebPack 是一种模块化的解决方案，不过 Webpack 的优点使得 Webpack 在很多场景下可以替代 Gulp/Grunt 类的工具
-- Gulp / Grunt 是基于任务和流的（Task、Stream）。类似于 jQuery 的链式函数的写法，通过一系列链式操作，更新流上的数据，整条链式操作构成了一个任务，多个任务就构成了整个 Web 的构建流程
-- Grunt 和 Gulp 的工作方式是：在一个配置文件中，指明对某些文件进行类似编译，组合，压缩等任务的具体步骤，工具之后可以自动替你完成这些任务。
+- Gulp / Grunt 是一种能够优化前端的开发流程的工具，而 WebPack 是一种模块化的解决方案，不过 Webpack 的优点使得 Webpack 在很多场景下可以替代 Gulp / Grunt 类的工具
+- Gulp / Grunt 是基于任务和流的（Task、Stream）。类似于 jQuery 的链式函数的写法，通过一系列链式操作，更新流上的数据，整条链式操作构成了一个任务，多个任务就构成了整个网页应用的构建流程
+- Grunt 和 Gulp 的工作方式是：在一个配置文件中，指明对某些文件进行类似编译、组合、压缩等任务的具体步骤，工具之后可以自动替你完成这些任务。
 
 ```jsx | inline
 import React from 'react';
@@ -83,9 +84,7 @@ export default () => <img alt="Webpack执行流程" src={img} width={720} />;
 
 三者都是前端构建工具，Grunt 和 Gulp 在早期比较流行，现在 Webpack 相对来说比较主流，不过一些轻量化的任务还是会用 Gulp 来处理，比如单独打包 CSS 文件等。
 
----
-
-**参考资料：**
+## 参考资料
 
 - [📖 Gulp Github Repository](https://github.com/gulpjs/gulp)
 - [📖 Gulp 中文文档](https://www.gulpjs.com.cn/)

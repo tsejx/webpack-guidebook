@@ -42,9 +42,7 @@ Parcel 接受单个入口资源作为输入，可以是任意类型：一个 JS 
 
 在 `bundle` 树被构建之后，每个 `bundle` 都会被 `packager` 写到一个特定文件类型的文件中。`packagers` 知道如何从每个资源中将代码合并起来，生成到最终被浏览器加载的文件中。
 
----
-
-**参考资料：**
+## 参考资料
 
 - [📖 PARCEL 极速零配置 Web 应用打包工具](https://parceljs.org/)
 - [📝 关于 Parcel 你所需要直到的一切：快速的 Web 应用打包工具](https://juejin.im/post/5a545c94518825733d68edae)
