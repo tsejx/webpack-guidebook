@@ -6,8 +6,8 @@ const config = {
   publicPath: '/webpack-guidebook/',
   favicon: './favicon.ico',
   logo: 'http://img.mrsingsing.com/webpack-guidebook-favicon.svg',
+  hash: true,
   exportStatic: {},
-  dynamicImport: {},
   navs: [
     null,
     {
