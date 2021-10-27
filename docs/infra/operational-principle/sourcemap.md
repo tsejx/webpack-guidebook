@@ -1,6 +1,17 @@
+---
+nav:
+  title: 架构原理
+  order: 2
+group:
+  title: 工作原理
+  order: 1
+title: SourceMap
+order: 14
+---
+
 # SourceMap
 
-Source map 就是一个信息文件，里面储存着代码的位置信息。这种文件主要用于开发调试，现在代码都会经过压缩混淆，这样报错提示会很难定位代码。通过 SourceMap 能快速定位到源代码，并进行调试。
+SourceMap 就是一个信息文件，里面储存着代码的位置信息。这种文件主要用于开发调试，现在代码都会经过压缩混淆，这样报错提示会很难定位代码。通过 SourceMap 能快速定位到源代码，并进行调试。
 
 通常情况 SourceMap 在开发环境开启，线上环境关闭。
 

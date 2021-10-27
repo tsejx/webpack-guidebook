@@ -2,6 +2,9 @@
 nav:
   title: 架构原理
   order: 2
+group:
+  title: 工作原理
+  order: 1
 title: 作用域提升
 order: 14
 ---
