@@ -1,6 +1,6 @@
 ---
 nav:
-  title: 原理分析
+  title: 架构原理
   order: 2
 group:
   title: Babel

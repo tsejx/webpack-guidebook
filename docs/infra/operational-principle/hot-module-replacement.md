@@ -1,6 +1,6 @@
 ---
 nav:
-  title: 原理分析
+  title: 架构原理
   order: 2
 group:
   title: 工作原理
@@ -123,7 +123,7 @@ let compiler = webpack(config);
 
 // 启动本地服务
 let server = new Server(compiler, options, log);
-server.listen(options.port, options.host, err => {
+server.listen(options.port, options.host, (err) => {
   if (err) {
     throw err;
   }
@@ -265,7 +265,7 @@ webpack-dev-middleware 调用 Webpack 的 API 对文件系统 watch，当代码�
 // node_modules/webpack-dev-middleware/index.js
 // start watching
 if (!options.lazy) {
-  const watching = compiler.watch(options.watchOptions, err => {
+  const watching = compiler.watch(options.watchOptions, (err) => {
     if (err) {
       /* 错误处理，代码精简省略 */
     }
@@ -299,6 +299,7 @@ setFs(context, compiler);
 
 ```js
 'xxx/node_modules/webpack-dev-server/client/index.js?http://localhost:8080';
+
 ```
 
 这个文件的代码会被打包到 `bundle.js` 中，运行在浏览器中。来看下这个文件的核心代码吧。
@@ -344,6 +345,7 @@ function reloadApp() {
 
 ```js
 'xxx/node_modules/webpack/hot/dev-server.js';
+
 ```
 
 这个文件的代码同样会被打包到 `bundle.js` 中，运行在浏览器中。这个文件做了什么就显而易见了吧！
@@ -355,7 +357,7 @@ function reloadApp() {
 var check = function check() {
   module.hot
     .check(true)
-    .then(function(updatedModules) {
+    .then(function (updatedModules) {
       // 容错，直接刷新页面
       if (!updatedModules) {
         window.location.reload();
@@ -367,13 +369,13 @@ var check = function check() {
         log('info', '[HMR] App is up to date.');
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       window.location.reload();
     });
 };
 
 var hotEmitter = require('./emitter');
-hotEmitter.on('webpackHotUpdate', function(currentHash) {
+hotEmitter.on('webpackHotUpdate', function (currentHash) {
   lastHash = currentHash;
   check();
 });
@@ -457,7 +459,7 @@ hotDownloadUpdateChunk 方法返回的就是最新 hash 值对应的代码块，
 再看下 `webpackHotUpdate` 这个方法。
 
 ```js
-window['webpackHotUpdate'] = function(chunkId, moreModules) {
+window['webpackHotUpdate'] = function (chunkId, moreModules) {
   hotAddUpdateChunk(chunkId, moreModules);
 };
 ```
@@ -547,13 +549,13 @@ for (i = 0; i < outdatedSelfAcceptedModules.length; i++) {
 ```js
 module.hot
   .check(true)
-  .then(function(updatedModules) {
+  .then(function (updatedModules) {
     if (!updatedModules) {
       return window.location.reload();
     }
     // ...
   })
-  .catch(function(err) {
+  .catch(function (err) {
     var status = module.hot.status();
     if (['abort', 'fail'].indexOf(status) >= 0) {
       window.location.reload();
@@ -600,9 +602,7 @@ webpack-dev-server 和 hot-module-replacement-plugin 之间的关系：hot-modul
 
 Webpack 构建出来的 `bundle.js` 本身是不具备热更新的能力的，HotModuleReplacementPlugin 的作用就是将 HMR runtime 注入到 `bundle.js`，使得 `bundle.js` 可以和 HMR server 建立 WebSocket 的通信连接
 
----
-
-**参考资料：**
+## 参考资料
 
 - [🗃 webpack / hot / dev-server](https://github.com/webpack/webpack/blob/master/hot/dev-server.js)
 - [🗃 webpack-dev-server](https://github.com/webpack/webpack-dev-server)

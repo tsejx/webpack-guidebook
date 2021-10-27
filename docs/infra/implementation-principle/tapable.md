@@ -1,6 +1,6 @@
 ---
 nav:
-  title: 原理分析
+  title: 架构原理
   order: 2
 group:
   title: 底层原理
@@ -55,7 +55,7 @@ Compiler.prototype = Object.create(Tapable.prototype);
 // my-custom-plugin.js
 function CustomPlugin() {}
 
-CustomPlugin.prototype.apply = function(compiler) {
+CustomPlugin.prototype.apply = function (compiler) {
   compiler.plugin('emit', pluginFunction);
 };
 ```
@@ -74,7 +74,7 @@ this.apply * ('emit', options);
 Tapable 库暴露了很多 Hook（钩子）类，为插件提供挂载的钩子：
 
 | 钩子                     | 钩入方式                        | 作用                                                                          |
-| ------------------------ | ------------------------------- | ----------------------------------------------------------------------------- |
+| :----------------------- | :------------------------------ | :---------------------------------------------------------------------------- |
 | Hook                     | `tap`、`tapAsync`、`tapPromise` | 钩子基类                                                                      |
 | SyncHook                 | `tap`                           | 同步钩子                                                                      |
 | SyncBailHook             | `tap`                           | 同步熔断钩子，只要执行的 handler 有返回值，剩余 handler 不执行                |
@@ -89,7 +89,7 @@ Tapable 库暴露了很多 Hook（钩子）类，为插件提供挂载的钩子�
 **Hook Helper 与 Tapable 类**
 
 | 名称            | 作用                                    |
-| --------------- | --------------------------------------- |
+| :-------------- | :-------------------------------------- |
 | HookCodeFactory | 编译生成可执行 fn 的工厂类              |
 | HookMap         | Map 结构，存储多个 Hook 实例            |
 | MutiHook        | 组合多个 Hook 实例                      |
@@ -102,7 +102,7 @@ Hook 的类型可以按照 **事件回调的运行逻辑** 或者 **触发事件
 **事件回调的运行逻辑**
 
 | 类型      | 方法                                                                                                                         |
-| --------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| :-------- | :--------------------------------------------------------------------------------------------------------------------------- |
 | Basic     | 基础类型，单纯的调用注册的事件回调，并并不关心其内部的运行逻辑                                                               |
 | Bail      | 保险类型，当一个事件回调在运行时返回的值不为 `undefined` 时，停止后面事件回调的执行                                          |
 | Waterfall | 瀑布类型，如果当前执行的事件回调返回值不为 `undefined`，那么就把下一个事件回调的第一个参数替换成这个值                       |
@@ -111,7 +111,7 @@ Hook 的类型可以按照 **事件回调的运行逻辑** 或者 **触发事件
 **触发事件的方式**
 
 | 类型          | 方法                                                                                                                                                                                                                                                                              |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| :------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Sync          | 同步方法。Sync 开头的 Hook 类只能用 `tap` 方法注册事件回调，这类事件回调会同步执行；如果使用 `tapAsync` 或者 `tapPromise` 方法注册则会<strong style="color: red">报错</strong>                                                                                                    |
 | AsyncSeries   | 异步串行钩子。Async 开头的 Hook 类，没法用 `call` 方法触发事件，必须用 `callAsync` 或者 Promise 方法触发；这两个方法都能触发 `tap`、`tapAsync` 和 `tapPromise` 注册的事件回调；AsyncSeries 按照顺序执行，当前事件回调如果是异步的，那么会等到异步执行完毕才会执行下一个事件回调。 |
 | AsyncParallel | 异步并行执行钩子。AsyncParalle 会并行执行所有的事件回调                                                                                                                                                                                                                           |
@@ -131,9 +131,11 @@ const hook1 = new SyncHook(['arg1', 'arg2', 'arg3']);
 Tabpack 提供了 同步 & 异步 绑定钩子的方法，并且他们都有帮 ID 难过事件和执行事件对应的方法。
 
 | Async\*                         | Sync\*       |
-| ------------------------------- | ------------ |
+| :------------------------------ | :----------- |
 | 绑定：`tapAsync/tapPromise/tap` | 绑定：`tap`  |
 | 执行：`callAsync/promise`       | 执行：`call` |
+
+<br />
 
 ```js
 const hook1 = new SyncHook(['arg1', 'arg2', 'arg3']);
@@ -155,7 +157,7 @@ compiler.hooks.calculateRoutes.intercept({
   call: (source, target, routesList) => {
     console.log('Starting to calculate routes.');
   },
-  register: tapInfo => {
+  register: (tapInfo) => {
     // tapInfo = { type: 'promise', name: 'GoogleMapsPlugin', fn: ... }
     console.log(`${tapInfo.name} is doing sth.`);
     return tapInfo;
@@ -206,9 +208,7 @@ compiler.hooks.accelerate.tap(
 );
 ```
 
----
-
-**参考资料：**
+## 参考资料
 
 - [📖 webpack/tapable](https://github.com/webpack/tapable)
 - [📖 Webpack 中文文档：Tapable](https://webpack.docschina.org/api/tapable/#src/components/Sidebar/Sidebar.jsx)
@@ -221,3 +221,123 @@ compiler.hooks.accelerate.tap(
 - [📝 Webpack Tapable 使用研究](https://juejin.im/post/5d36faa9e51d45109725ff55)
 - [📝 干货！撸一个 Webpack 插件（内含 Tapable 详解+ Webpack 流程）（2018-11-14）](https://juejin.im/post/5beb8875e51d455e5c4dd83f)
 - [📝 异步编程学习笔记之 Tapable 源码分析（2018-02-05）](https://zhuanlan.zhihu.com/p/33577267)
+
+### Tapable 用法
+
+```js
+const {
+  SyncHook,
+  SyncBailHook,
+  SyncWaterfallHook,
+  SynLoopHook,
+  AsyncParallelHook,
+  AsyncParallelBailHook,
+  AsyncSeriesHook,
+  ASyncSeriesBailHook,
+  AsyncSeriesWaterfallHook,
+} = require('tapable');
+```
+
+- `Sync*` 同步
+  - `SyncHook` 同步钩子
+  - `SyncBailHook` 同步保险钩子
+  - `SyncLoopHook` 同步循环钩子
+  - `SyncWaterfallHook` 同步瀑布钩子
+- `Async*` 异步
+  - `AsyncParallel*` 异步并行
+    - `AsyncParallelHook` 异步
+    - `AsyncParallelBailHook` 异步并行保险钩子
+  - `AsyncSeries*` 异步串行
+    - `AsyncSeriesHook` 异步串行钩子
+    - `AsyncSeriesBailHook` 异步串行保险钩子
+    - `AsyncSeriesWaterfallHook` 异步串行瀑布钩子
+
+### 实现简易同步钩子
+
+```js
+class Hook {
+  constructor(args) {
+    this.taps = [];
+    this.interceptors = []; // 这个放在后面用
+    this._args = args;
+  }
+  tap(name, fn) {
+    this.taps.push({ name, fn });
+  }
+}
+
+class SyncHook extends Hook {
+  call(name, fn) {
+    try {
+      this.taps.forEach((tap) => tap.fn(name));
+      fn(null, name);
+    } catch (error) {
+      fn(error);
+    }
+  }
+}
+```
+
+### Tapable 如何与插件关联
+
+**Compile.js**
+
+```js
+const { AsyncSeriesHook, SyncHook } = require('tapable');
+
+// 创建类
+class Compiler {
+  constructor() {
+    this.hooks = {
+      // 异步钩子
+      run: new AsyncSeriesHook(['compiler']),
+      // 同步钩子
+      compile: new SyncHook(['params']),
+    };
+  }
+
+  run() {
+    // 执行异步钩子
+    this.hooks.run.callAsync(this, (err) => {
+      this.compile(onCompiled);
+    });
+  }
+
+  compile() {
+    // 执行同步钩子 并传参
+    this.hooks.compile.call(params);
+  }
+}
+
+module.exports = Compile;
+```
+
+**MyPlugin.js**
+
+```js
+const Compiler = require('./compiler');
+
+class MyPlugin {
+  // 接受 compiler 参数
+  apply(compiler) {
+    compiler.hooks.run.tap('MyPlugin', () => console.log('开始编译...'));
+    compiler.hooks.compiler.tapAsync('MyPlugin', (name, age) => {
+      setTimeout(() => {
+        console.log('编译中');
+      }, 1000);
+    });
+  }
+}
+
+// 这里类似于 webpack.config.js 的 Plugins 配置
+// 向 Plugins 属性传入 new 实例
+
+const myPlugin = new MyPlugin();
+
+const options = {
+  plugins: [myPlugin],
+};
+
+let compiler = new Compiler(options);
+compiler.run();
+```

@@ -1,6 +1,6 @@
 ---
 nav:
-  title: 原理分析
+  title: 架构原理
   order: 2
 group:
   title: 底层原理
@@ -11,15 +11,32 @@ order: 11
 
 # Loader 机制
 
-Loader 是 webpack 的核心概念之一，它的基本工作流是将一个文件以字符串的形式读入，对其进行语法分析及转换，然后交由下一环节进行处理，所有载入的模块最终都会经过 `moduleFactory` 处理，转成 JavaScript 可以识别和运行的代码，从而完成模块的集成。
+Loader 是 Webpack 的核心概念之一，它的基本工作流是将一个文件以字符串的形式读入，对其进行语法分析及转换，然后交由下一环节进行处理，所有载入的模块最终都会经过 `moduleFactory` 处理，转成 JavaScript 可以识别和运行的代码，从而完成模块的集成。
 
 ## 使用方式
 
-定义：Loader 只是一个导出为函数的 JavaScript 模块
+本质上 `loader` 只是一个导出为函数的 JavaScript 模块
 
 ```js
-module.exports = function(source) {
-  return source;
+// 导出一个函数，source 为 webpack 传递给 loader 的文件源内容
+module.exports = function (source) {
+  const content = doSomeThing2JsString(source);
+
+  // 如果 loader 配置了 options 对象，那么this.query将指向 options
+  const options = this.query;
+
+  // 可以用作解析其他模块路径的上下文
+  console.log('this.context');
+
+  /*
+   * this.callback 参数：
+   * error：Error | null，当 loader 出错时向外抛出一个 error
+   * content：String | Buffer，经过 loader 编译后需要导出的内容
+   * sourceMap：为方便调试生成的编译后内容的 source map
+   * ast：本次编译生成的 AST 静态语法树，之后执行的 loader 可以直接使用这个 AST，进而省去重复生成 AST 的过程
+   */
+  this.callback(null, content); // 异步
+  return content; // 同步
 };
 ```
 
@@ -54,7 +71,7 @@ compose = (f, g) => (...args) => f(g(...args));
 由于 Webpack 是运行在 Node.js 之上的，一个 Loader 其实就是一个 Node.js 模块，这个模块需要导出一个函数。这个导出的函数的工作就是获得处理前的元内容，对元内容的执行处理后，返回处理后的内容。
 
 ```js
-module.exports = function(source) {
+module.exports = function (source) {
   // source 为 compiler 传递给 Loader 的一个文件的原内容
   // 该函数需要返回处理后的内容给你，这里简单起见，直接把原内容返回了，相当于该 Loader 没有做任何转换
   return source;
@@ -66,7 +83,7 @@ module.exports = function(source) {
 ```js
 const sass = require('node-sass');
 
-module.exports = function(source) {
+module.exports = function (source) {
   return sass(source);
 };
 ```
@@ -87,7 +104,7 @@ module.exports = function(source) {
 ```js
 const loaderUtils = require('loader-utils');
 
-module.exports = function(source) {
+module.exports = function (source) {
   // 获取到用户句给当前 Loader 传入的 options
   const options = loaderUtils.getOptions(this);
   return source;
@@ -103,7 +120,7 @@ module.exports = function(source) {
 为了把 Source Map 也一起随着 ES5 代码返回给 Webpack，可以这样写：
 
 ```js
-module.exports = function(source) {
+module.exports = function (source) {
   // 通过 this.callback 告诉 Webpack 返回的结果
   this.callback(null, source, sourceMaps);
   // 当你使用 this.callback 返回内容时，该 Loader 必须返回 undefined
@@ -135,11 +152,11 @@ this.callback(
 Loader 有同步和异步之分，上面的 Loader 都是同步的 Loader，因为它们的转换流程都是同步的，转换完成后再返回结果。但有些场景下转换的步骤只能是异步完成的，例如你需要通过网络请求才能得出结果，如果采用同步的方式 `网络请求` 就会阻塞整个构建，导致构建非常缓慢。
 
 ```js
-module.exports = function(source) {
+module.exports = function (source) {
   // 告诉 Webpack 本次转换是异步的，Loader 会在 callback 中回调结果
   var callback = this.async();
 
-  someAsyncOperation(source, function(err, result, sourceMaps, ast) {
+  someAsyncOperation(source, function (err, result, sourceMaps, ast) {
     // 通过 callback 返回异步执行后的结果
     callback(err, result, sourceMaps, ast);
   });
@@ -151,7 +168,7 @@ module.exports = function(source) {
 在默认的情况下，Webpack 传给 Loader 的原内容都是 UTF-8 格式编码的字符串。但有些场景下 Loader 不是处理文本文件，而是处理二进制文件，例如 `file-loader`，就需要 Webpack 给 Loader 传入二进制格式的数据。为此，你需要这样编写 Loader：
 
 ```js
-module.exports = function(source) {
+module.exports = function (source) {
   // 在 exports.raw = true 时，Webpack 传给 Loader 的 source 是 Buffer 类型的
   source instanceof Buffer === true;
   // Loader 返回的类型也可以是 Buffer 类型的
@@ -171,7 +188,7 @@ module.exports.raw = true;
 
 ```js
 const loaderUtil = require('loader-utils');
-module.exports = function(content) {
+module.exports = function (content) {
   const url = loaderUtil.interpolateName(this, '[hash].[ext]', {
     content,
   });
@@ -191,7 +208,7 @@ module.exports = function(content) {
 如果你想让 Webpack 不缓存该 Loader 的处理结果，可以这样：
 
 ```js
-module.exports = function(source) {
+module.exports = function (source) {
   // 关闭该 Loader 的缓存功能
   this.cacheable(false);
   return source;
@@ -205,7 +222,7 @@ Webpack 编译流程非常复杂，但其中设计 Loader 的部分主要包括�
 - Loader（Webpack）的默认配置
 - 使用 LoaderResolver 解析 Loader 模块路径
 - 根据 `rule.modules` 创建 RulesSet 规则集
-- 使用 loader-runner 运行 loader
+- 使用 `loader-runner` 运行 Loader
 
 ## 区别
 
@@ -217,5 +234,3 @@ Webpack 编译流程非常复杂，但其中设计 Loader 的部分主要包括�
 - Plugin
   - 作用：能扩展 Webpack 的功能。在 Webpack 运行的生命周期中广播出许多事件，Plugin 可以监听这些事件，在合适的时机通过 Webpack 提供的 API 改变输出结果。
   - 用法：每项为实例，参数通过构造函数传入。
-
-

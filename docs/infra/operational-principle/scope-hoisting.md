@@ -1,6 +1,6 @@
 ---
 nav:
-  title: 原理分析
+  title: 架构原理
   order: 2
 title: 作用域提升
 order: 14
@@ -34,7 +34,7 @@ document.write(helloworld());
 上述代码经过 Webpack 打包构建后会将模块转换为 **模块初始化函数**：
 
 ```js
-(function(module, __webpack_exports__, __webpack_require__) {
+(function (module, __webpack_exports__, __webpack_require__) {
   /* 执行代码 */
 });
 ```
@@ -49,7 +49,7 @@ document.write(helloworld());
 各个模块被独立打包后，汇集成 `modules` 作为参数传入一个匿名函数：
 
 ```js
-(function(modules) {
+(function (modules) {
   // 模块缓存
   var installedModules = {};
 
@@ -83,11 +83,11 @@ document.write(helloworld());
   __webpack_require__(0);
 })([
   /* 0 module */
-  function(module, __webpack_exports__, __webpack_require__) {
+  function (module, __webpack_exports__, __webpack_require__) {
     //...
   },
   /* 1 module */
-  function(module, __webpack_exports__, __webpack_require__) {
+  function (module, __webpack_exports__, __webpack_require__) {
     //...
   },
 ]);
@@ -112,11 +112,11 @@ document.write(helloworld());
 
 ```js
 ({
-  './src/index.js': function(module, __webpack_exports__, __webpack_require__) {
+  './src/index.js': function (module, __webpack_exports__, __webpack_require__) {
     'use strict';
     eval(/* 模块代码 */);
   },
-  './src/helloworld.js': function(module, __webpack_exports__, __webpack_require__) {
+  './src/helloworld.js': function (module, __webpack_exports__, __webpack_require__) {
     'use strict';
     eval(/* 模块代码 */);
   },
@@ -181,8 +181,6 @@ webpack --display-optimization-bailout
 
 另外，当你使用这个插件的时候，模块热更新将不起作用，所以最好只在代码优化的时候才使用这个插件。
 
----
-
-**参考资料：**
+## 参考资料
 
 - [📝 Webpack 3 的新功能：Scope Hoisting（2017-07-20）](https://zhuanlan.zhihu.com/p/27980441)

@@ -1,6 +1,6 @@
 ---
 nav:
-  title: 原理分析
+  title: 架构原理
   order: 2
 group:
   title: 底层原理
@@ -101,7 +101,7 @@ ESLint 的检查基于 AST，除了这些内置规则外，ESLint 为我们提�
 module.exports = {
   rules: {
     'var-length': {
-      create: function(context) {
+      create: function (context) {
         // 规则实现
       },
     },
@@ -117,9 +117,9 @@ module.exports = {
 module.exports = {
   rules: {
     'var-length': {
-      create: function(context) {
+      create: function (context) {
         return {
-          VariableDeclarator: node => {
+          VariableDeclarator: (node) => {
             if (node.id.name.length < 2) {
               context.report(node, 'Variable names should be longer than 1 character');
             }
@@ -181,7 +181,7 @@ module.exports = {
           parent: {
             type: 'MemberExpression',
             property: {
-              name: val => disallowedMethods.includes(val),
+              name: (val) => disallowedMethods.includes(val),
             },
           },
         });
@@ -286,9 +286,9 @@ var b = console.log;
 console.log = func;
 
 // Output
-var a = void 0(function() {});
-var b = function() {};
-console.log = function() {};
+var a = void 0(function () {});
+var b = function () {};
+console.log = function () {};
 ```
 
 上述 Babel 插件的工作方式与前述的 ESLint 自定义插件/规则类似，工具在遍历源码生成的 AST 时，根据我们指定的节点类型进行对应的检查。
@@ -300,7 +300,7 @@ console.log = function() {};
 Webpack 是一个 JavaScript 生态的打包工具，其打出 bundle 结构是一个 IIFE（立即执行函数）。
 
 ```js
-(function(module) {})([function() {}, function() {}]);
+(function (module) {})([function () {}, function () {}]);
 ```
 
 Webpack 在打包流程中也需要 AST 的支持，它借助 Acorn 库解析源码，生成 AST，提取模块的依赖关系。
@@ -318,9 +318,7 @@ Parser.prototype.parse = function parse(source, initialState) {
 }
 ```
 
----
-
-**参考资料：**
+## 参考资料
 
 - [🛠 Esprima：在线解析生产 AST 语法树](https://esprima.org/demo/parse.html)
 - [🛠 Acorn：Esprima 后的轮子，目前使用最多，WebPack 也使用此工具](https://github.com/acornjs/acorn)

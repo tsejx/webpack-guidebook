@@ -1,6 +1,6 @@
 ---
 nav:
-  title: 原理分析
+  title: 架构原理
   order: 2
 group:
   title: 底层原理
@@ -60,7 +60,7 @@ const parser = require('@babel/parser');
 const options = require('./webpack.config.js');
 
 const Parser = {
-  getAst: path => {
+  getAst: (path) => {
     // 读取入口文件
     const content = fs.readFileSync(path, 'utf-8');
     // 将文件内容转为 AST 抽象语法树
@@ -106,7 +106,7 @@ const parser = require('@babel/parser');
 const traverse = require('@babel/traverse').default;
 
 const Parser = {
-  getAst: path => {
+  getAst: (path) => {
     // 读取入口文件
     const content = fs.readFileSync(path, 'utf-8');
     // 将文件内容转为 AST 抽象语法树
@@ -172,7 +172,7 @@ const traverse = require('@babel/traverse').default;
 const { transformFromAst } = require('@babel/core');
 
 const Parser = {
-  getASt: path => {
+  getASt: (path) => {
     // 读取入口文件
     const content = fs.readFileSync(path, 'utf-8');
     // 将文件内容转为 AST 抽象语法树
@@ -194,7 +194,7 @@ const Parser = {
     });
     return dependencies;
   },
-  getCode: ast => {
+  getCode: (ast) => {
     // AST 转换为 Code
     const { code } = transformFromAst(ast, null, {
       parsets: ['@babel/preset-env'],
@@ -239,7 +239,7 @@ const traverse = require('@babel/traverse').default;
 const { transformFromAst } = require('@babel/core');
 
 const Parser = {
-  getASt: path => {
+  getASt: (path) => {
     // 读取入口文件
     const content = fs.readFileSync(path, 'utf-8');
     // 将文件内容转为 AST 抽象语法树
@@ -261,7 +261,7 @@ const Parser = {
     });
     return dependencies;
   },
-  getCode: ast => {
+  getCode: (ast) => {
     // AST 转换为 Code
     const { code } = transformFromAst(ast, null, {
       parsets: ['@babel/preset-env'],
@@ -339,7 +339,7 @@ const traverse = require('@babel/traverse').default;
 const { transformFromAst } = require('@babel/core');
 
 const Parser = {
-  getASt: path => {
+  getASt: (path) => {
     // 读取入口文件
     const content = fs.readFileSync(path, 'utf-8');
     // 将文件内容转为 AST 抽象语法树
@@ -361,7 +361,7 @@ const Parser = {
     });
     return dependencies;
   },
-  getCode: ast => {
+  getCode: (ast) => {
     // AST 转换为 Code
     const { code } = transformFromAst(ast, null, {
       parsets: ['@babel/preset-env'],
@@ -452,13 +452,13 @@ new Compiler(options).run();
 ## bundle 实现
 
 ```js
-(function(graph) {
+(function (graph) {
   function require(moduleId) {
     function localRequire(relativePath) {
       return require(graph[moduleId].dependecies[relativePath]);
     }
     var exports = {};
-    (function(require, exports, code) {
+    (function (require, exports, code) {
       eval(code);
     })(localRequire, exports, graph[moduleId].code);
     return exports;
@@ -484,7 +484,7 @@ new Compiler(options).run();
 
 ```js
 // 定义一个立即执行函数，传入生成的依赖关系图
-(function(graph) {
+(function (graph) {
   // 重写 require 函数
   function require(moduleId) {
     // ./src/index.js
@@ -512,10 +512,10 @@ new Compiler(options).run();
 
 ```js
 // 定义一个立即执行函数，传入生成的依赖关系图
-(function(graph) {
+(function (graph) {
   // 重写 require 函数
   function require(moduleId) {
-    (function(code) {
+    (function (code) {
       console.log(code);
       eval(code);
     })(graph[moduleId].code);
@@ -542,7 +542,7 @@ new Compiler(options).run();
 
 ```js
 // 定义一个立即执行函数，传入生成的依赖关系图
-(function(graph) {
+(function (graph) {
   // 重写 require 函数
   function require(moduleId) {
     // 找到对应 moduleId 的依赖对象，调用 require 函数，eval 执行，拿到 exports 对象
@@ -552,7 +552,7 @@ new Compiler(options).run();
     // 定义 exports 对象
     var exports = {};
 
-    (function(require, exports, code) {
+    (function (require, exports, code) {
       // CommonJS 语法使用 module.exports 暴露实现，我们传入的 exports 对象会捕获依赖对象（Hello.js）暴露的实现（exports.say = say）并写入
       eval(code);
     })(localRequire, exports, graph[moduleId].code);
@@ -577,8 +577,6 @@ new Compiler(options).run();
 });
 ```
 
----
-
-**参考资料：**
+## 参考资料
 
 - [Webpack 打包原理？看完这篇你就懂了！（2020-01-06）](https://juejin.im/post/5e116fce6fb9a047ea7472a6)

@@ -278,9 +278,7 @@ cheap-module-source-map （这也是下版本 webpack 使用 `-d` 命令启动 d
 场景：由于项目急，鉴权是通过前端动态生成路由控制的，后台没做判断，导致修改源码后，可以获得更多的权限（数据被删除）
 例如常见的视频播放网站，如果不加密，直接一个 `<video>` 标签，那么就很容易被人拿到视频资源，自己的会员业务也会损失。
 
----
-
-参考资料：
+## 参考资料
 
 - [JavaScript Source Map 详解](http://www.ruanyifeng.com/blog/2013/01/javascript_source_map.html)
 - [你所不知道的 SourceMap](https://juejin.im/post/5e099ee3f265da33910a547d)

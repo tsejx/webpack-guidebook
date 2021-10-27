@@ -1,6 +1,6 @@
 ---
 nav:
-  title: 原理分析
+  title: 架构原理
   order: 2
 group:
   title: 工作原理
@@ -24,7 +24,7 @@ Webpack 为此提供**占位符**。这些字符串用于将特定信息附加�
 最有价值的是：
 
 - `[hash]`：和整个项目的构建相关，只要项目文件有修改，整个项目构建的 `hash` 值就会更改
-- `[chunkhash]`：和 Webpack 打包的 `chunk` 有关，不同的 `entry` 会生成不同的 `chunkhash` 值（由于采用 `chunkhash`，所以项目主入口文件 `main.js` 及其对应的依赖文件 `main.css` 由于被打包在同一个模块，所以共用相同的 `chunkhash`，但是公共库由于是不同的模块，所以有单独的 `chunkhash`，这样就保证了在线上构建时只要文件内容没哟u 更改就不会重复构建）
+- `[chunkhash]`：和 Webpack 打包的 `chunk` 有关，不同的 `entry` 会生成不同的 `chunkhash` 值（由于采用 `chunkhash`，所以项目主入口文件 `main.js` 及其对应的依赖文件 `main.css` 由于被打包在同一个模块，所以共用相同的 `chunkhash`，但是公共库由于是不同的模块，所以有单独的 `chunkhash`，这样就保证了在线上构建时只要文件内容没哟 u 更改就不会重复构建）
 - `[contenthash]`：根据文件内容来定义 `hash`，文件内容不变，则 `contenthash` 不变
 
 `hash` 和 `chunkhash` 仅用于生产目的，因为哈希值在开发期间没有太大的用处。
